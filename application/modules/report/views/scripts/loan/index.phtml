@@ -15,6 +15,9 @@
   $rpt_payoff=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-payoff'), null, true);
   $rpt_expectincome=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-expect-income'), null, true);
   $rpt_exchangemoney=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-xchange'), null, true);
+
+  $rpt_commission=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-commission'), null, true);
+
   
   $rpt_loandisburseco=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-disburse-co'), null, true);
   $rpt_npl=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-npl'), null, true);
@@ -66,6 +69,8 @@
   		<li><a href="<?php echo $rpt_loanoustading;?>"><?php echo $tr->translate('LOAN_OUTSTADING');?></a></li>
 		<li><a href="<?php echo $rpt_loanoustadingvillage;?>"><?php echo $tr->translate('LOAN_OUTSTADING_VILLAGE');?></a></li>
 		<li><a href="<?php echo $rpt_expense;?>"><?php echo $tr->translate('REPORT_EXPENSE');?></a></li>
+		<li><a href="<?php //echo $rpt_exchanges;?>"><?php echo $tr->translate('EXCHANGES');?></a></li>
+		<li><a href="<?php echo $rpt_commission;?>"><?php echo $tr->translate('COMMISSION');?></a></li>
 		<?php 
 		$session_user=new Zend_Session_Namespace('auth');
 	    $level =  $session_user->level;  
