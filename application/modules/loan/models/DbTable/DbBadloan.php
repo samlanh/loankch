@@ -20,7 +20,7 @@ class Loan_Model_DbTable_DbBadloan extends Zend_Db_Table_Abstract
     			'client_code'=>$_data['client_codeadd'],
     			'client_name'=>$_data['client_nameadd'],
     			'loan_number'=>$_data['loannumber'],
-    			//'intrest_amount'=>$_data['Interest_amount'],
+    			'intrest_amount'=>$_data['Interest_amount'],
     			'date'=>$_data['Date'],
     			'loss_date'=>$_data['date_loss'],
     			'cash_type'=>$_data['cash_type'],
@@ -39,6 +39,23 @@ class Loan_Model_DbTable_DbBadloan extends Zend_Db_Table_Abstract
     	);
     	$where=" group_id = ".$_data['client_codeadd'];
 		$this->update($arr_loan_group, $where);
+		
+		$this->_name='ln_income_expense';
+			$data = array(
+					'branch_id'=>$_data['branch'],
+					'account_id'=>'កម្ចីខូច',
+					'total_amount'=>$_data['Total_amount'],
+// 					'Date'=>$data['for_date'],
+					'invoice'=>'',
+					'curr_type'=>$_data['cash_type'],
+					'tran_type'=>1,
+					'disc'=>$_data['Note'],
+					'date'=>$_data['Date'],
+					'status'=>$_data['status'],
+					'user_id'=>$user_id
+			);
+			$this->insert($data);
+		
 		$db->commit();
 		}catch (Exception $e){
 			$db->rollBack();
@@ -219,7 +236,7 @@ class Loan_Model_DbTable_DbBadloan extends Zend_Db_Table_Abstract
     public function getLoanInfo($id){
     	$db=$this->getAdapter();
     	$sql=" SELECT (SELECT lf.total_principal FROM `ln_loanmember_funddetail` AS lf WHERE lf. member_id= l.member_id AND status=1 AND lf.is_completed=0 LIMIT 1)  AS total_principal,
-    	              (SELECT lf.total_interest FROM `ln_loanmember_funddetail` AS lf WHERE lf. member_id= l.member_id AND status=1 AND lf.is_completed=0 LIMIT 1)  AS total_interest ,
+    	              (SELECT sum(lf.total_interest) FROM `ln_loanmember_funddetail` AS lf WHERE lf. member_id= l.member_id AND status=1 AND lf.is_completed=0 LIMIT 1)  AS total_interest ,
     	              (SELECT lf.date_payment FROM `ln_loanmember_funddetail` AS lf WHERE lf. member_id= l.member_id AND status=1 AND lf.is_completed=0 LIMIT 1)  AS date_payment,
                       g.level,g.date_release,g.date_line,g.total_duration,g.pay_term,
                       SUM(l.total_capital) as total_capital,			  

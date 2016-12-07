@@ -864,9 +864,10 @@ function loantype(){
 		}
 }
 function zone(){
-	
-	dijit.byId("frm_zone").show();
-
+	zone = dijit.byId('zone').get('value');
+	if(zone==-1){
+		dijit.byId("frm_zone").show();
+	}
 }
 var url_loantype = '<?php echo $this->url(array('module'=>'loan','controller'=>'index','action'=>'add-newloantype')); ?>';
 function addNewloanType(){
