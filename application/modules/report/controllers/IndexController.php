@@ -129,5 +129,8 @@ function delinquentloansAction(){
  function zendhtmlAction(){
  	
  }
+ function exchangeAction(){
+ 	
+ }
 }
 
