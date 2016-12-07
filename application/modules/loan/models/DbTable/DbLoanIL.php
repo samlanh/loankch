@@ -277,7 +277,8 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     			$ispay_principal=2;//for payment type = 5;
     			$is_subremain = 2;
     			$curr_type = $data['currency_type'];
-    			
+    			$penelize_service=0;
+    			$saving=empty($data['deposit'])?0:$data['deposit'];
     			//for IRR method
     			if($data['repayment_method']==6 OR $data['repayment_method']==7){
     				
@@ -467,7 +468,67 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
 	    					}
 	    				}
 	    				
-    				}else{//    fixed payment with fixed rate
+    				}///
+    				elseif($payment_method==8){
+    					$panelize_descreas =1500;
+    					$pri_permonth = ($data['total_amount']/($amount_borrow_term/$amount_fund_term));
+    					$pri_permonth =$this->round_up_currency($curr_type,$pri_permonth);
+    				
+    					if($i!=1){
+    						if($data['period']<=15){//if period<18;ok
+    							$ispay_principal++;
+    							$is_subremain++;
+    							if(($is_subremain-1)==2){
+    								$is_subremain=1;
+    							}
+    							if(($ispay_principal-1)==2+1){
+    								$ispay_principal=2;
+    								$interest_rate = $interest_rate-0.1;
+    							}
+    								
+    						}elseif($data['period']<=20){
+    							if($i>5){//top record
+    								$interest_rate=$data['interest_rate']-0.1;
+    							}
+    							if($loop_payment-$i<5){//5 last record
+    								$interest_rate=$data['interest_rate']-0.2;
+    							}
+    				
+    						}else{//>20week or = 24
+    				
+    							if($i>5){//top record
+    								$interest_rate=$data['interest_rate']-0.1;
+    							}
+    							if($loop_payment-$i<5){//5 last record
+    								$interest_rate=$data['interest_rate']-0.2;
+    							}
+    						}
+    						$remain_principal = $remain_principal-$pri_permonth;//OSប្រាក់ដើមគ្រា
+    						if($i==$loop_payment){//for end of record only
+    							$pri_permonth = $remain_principal;
+    						}
+    						$start_date = $next_payment;
+    						$next_payment = $dbtable->getNextPayment($str_next, $next_payment, $data['amount_collect'],$data['every_payamount'],$data['first_payment']);
+    							
+    						$penelize_service = $penelize_service-$panelize_descreas;
+    						if($i>11){
+    							$penelize_service=0;
+    						}
+    					}else{
+    						$penelize_service = 39500;
+    						$interest_rate = $data['interest_rate'];
+    							
+    						$next_payment = $data['first_payment'];
+    						$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
+    					}
+    					$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
+    					$amount_peroid = $dbtable->getAmountDayByTerm($data['pay_every']);
+    					$interest_paymonth = $data['total_amount']*($interest_rate/100/$borrow_term)*$amount_peroid;
+    				
+    				}
+    				
+    				
+    				else{//    fixed payment with fixed rate
     					if($i!=1){
     						$start_date = $next_payment;
     						$next_payment = $dbtable->getNextPayment($str_next, $next_payment, $data['amount_collect'],$data['every_payamount'],$data['first_payment']);
@@ -513,8 +574,10 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     							'principle_after'=> $old_pri_permonth,//good
     							'total_interest'=>$old_interest_paymonth,//good
     							'total_interest_after'=>$old_interest_paymonth,//good
-    							'total_payment'=>$old_pri_permonth+$old_interest_paymonth,//good
-    							'total_payment_after'=>$old_pri_permonth+$old_interest_paymonth,//good
+    							'total_payment'=>$old_pri_permonth+$old_interest_paymonth+$saving,//good
+    							'total_payment_after'=>$old_pri_permonth+$old_interest_paymonth+$saving,//good
+    							'penelize_service'=>$penelize_service,
+    							'saving_amount'=>$saving,
     							'date_payment'=>$next_payment,//good
     							'is_completed'=>0,
     							'branch_id'=>$data['branch_id'],
@@ -592,7 +655,9 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     						'branch_id'=>$data['branch_id'],
     						'status'=>1,
     						'amount_day'=>$amount_day,
-    						'collect_by'=>$data['co_id']
+    						'collect_by'=>$data['co_id'],
+    						'penelize_service'=>$penelize_service,
+    						'saving_amount'=>$saving,
     				);
     				$this->insert($datapayment);
     				

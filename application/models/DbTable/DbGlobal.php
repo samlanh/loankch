@@ -825,6 +825,16 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
   	return $end_date;
   	
   }
+  public function getAmountDayByTerm($pay_term){
+  	if($pay_term==3){
+  		$amount_day = 30;
+  	}elseif($pay_term==2){
+  		$amount_day = 7;
+  	}else{
+  		$amount_day = 1;
+  	}
+  	return $amount_day;
+  }
   public function getNextDateById($pay_term,$amount_next_day){
   	if($pay_term==3){
   		$str_next = '+1 month';

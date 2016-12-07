@@ -399,7 +399,7 @@ public function init()
 				'class'=>'fullside',
 				 
 		));
-		$_deposit->setValue(0);
+// 		$_deposit->setValue(0);
 		
 		$_branch_id = new Zend_Dojo_Form_Element_FilteringSelect('branch_id');
 		$_branch_id->setAttribs(array(
