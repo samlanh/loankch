@@ -2,7 +2,7 @@
 $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 $url = $this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-groupmember'));
 $url_client = $this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-paymentschedules'));
-$url_contract = $this->url(array('module'=>'report','controller'=>'loan','action'=>'contract-letter'));
+$url_contract = $this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-updatepayment'));
 ?>
 <style>
 .hover:hover{ background: #ccc;}
@@ -155,7 +155,7 @@ th{padding: 5px;}
 						echo 'group';
 					}
 					; ?>&nbsp;</td>	
-					<td align="left">&nbsp;<a target="_blank" title="click here to preview contract" style="color:#000; text-decoration: none;" href="<?php echo $url_contract."/id/".$row['member_id'];?>">&nbsp;<?php echo 'Contract'; ?></a>&nbsp;
+					<td align="left">&nbsp;<a target="_blank" title="click here to preview contract" style="color:#000; text-decoration: none;" href="<?php echo $url_contract."/id/".$row['member_id'];?>">&nbsp;<?php echo 'Update Old Payment'; ?></a>&nbsp;
 					</td>			
 					</tr>
 				<?php }?>

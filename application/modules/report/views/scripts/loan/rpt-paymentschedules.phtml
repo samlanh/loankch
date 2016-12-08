@@ -27,29 +27,20 @@ td p{ margin-top:0px !important;}
 		<tr>
 	    	<td align="center">
 	        	<table width="100%" style="font-family:khmer;margin:0 auto;padding:0px; border:none;">
-	            	<?php  if($client['pay_term']==2){ ?>
+	            	<?php // if($client['pay_term']==2){ ?>
+					<?php //}else{?>
 					<tr>
-	                	<td width="30%">
-	                	</td>
-	                	<td width="47%" valign="top">
-	                	<h2 style="text-align:center; font-size:16px; font-family:'Khmer OS Muol'"><label><?php //echo $tr->translate("BRAND_TITLE");?><?php //echo $this->data['brand_title'];?></label></h2>
-	                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer OS Muol'"><label><?php //echo $client['branch_name'];?></label></h2>
-	                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer OS Muol'"><?php //echo $tr->translate('rpt-paymentschedule');?> <?php echo ($client['loan_type']==1)?$tr->translate('RPT_ILLOAN'):$tr->translate('RPT_GROULOAN') ;?></h2></td>
-	                    <td ></td>
-	                </tr>
-					<?php }else{?>
-					<tr>
-	                	  <td width="30%" style="border-bottom: 1px solid #000;"><img src="<?php //echo $this->baseUrl();?>/images/logo.jpg" height="85px"> 
+	                	  <td width="30%" style=""><!-- <img src="<?php //echo $this->baseUrl();?>/images/logo.jpg" height="85px">  -->
 	                		<p style="font-family: 'Khmer OS Battambang'; font-size:9px;margin-top:4px; line-height:15px;"><?php //echo $client['branch_name'];?> 	<?php //echo $this->data['brand_adress'];?>
 								<br /><?php //echo $this->data['phone_brand'];?></p>
 	                	</td>
 	                	<td width="47%" valign="top">
-	                	<h2 style="text-align:center; font-size:16px; font-family:'Khmer OS Muol'"><label><?php echo $tr->translate("BRAND_TITLE");?><?php //echo $this->data['brand_title'];?></label></h2>
-	                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer OS Muol'"><label><?php echo $client['branch_name'];?></label></h2>
+	                	<h2 style="text-align:center; font-size:18px; font-family:'Khmer OS Muol'"><label><?php echo $tr->translate("BRAND_TITLE");?><?php //echo $this->data['brand_title'];?></label></h2>
+	                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer OS Muol'"><label><?php //echo $client['branch_name'];?></label></h2>
 	                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer OS Muol'"><?php //echo $tr->translate('rpt-paymentschedule');?> <?php echo ($client['loan_type']==1)?$tr->translate('RPT_ILLOAN'):$tr->translate('RPT_GROULOAN') ;?></h2></td>
-	                    <td ><img src="<?php echo $url_barcode;?>" /></td>
+	                    <td ></td>
 	                </tr>
-					<?php }?>
+					<?php //}?>
 	                <?php $db = new Application_Model_DbTable_DbGlobal();
 	                	  $row = $db->getClientByType(null,$client['client_id'],1);
 	                ?> 
@@ -97,7 +88,6 @@ td p{ margin-top:0px !important;}
 	                    <td rowspan="2"><?php echo $tr->translate("PRINCIPLE");?></td>
 	                    <td><?php echo $tr->translate("AMOUNT");?></td>
 	                    <td rowspan="2"><?php echo $tr->translate("OS");?></td>
-	                     
 	                    <td>បង់ផ្ដាច់ត្រូវពិន័យ</td>
 	                    <td>អ្នកទទួល</td>
 	                </tr>
@@ -143,23 +133,11 @@ td p{ margin-top:0px !important;}
 	               		</tr>
 	               <?php }?>
 	            </table>
-	            
-	            
-	            
 	            <table>
 	            	<tr>
 	            		<td align="left" style="font-size: 12px;" ><u>បញ្ជាក់:</u> ការសងប្រាក់ប្រព្រឹត្តទៅតាមកិច្ចសន្យាខ្ចីប្រាក់និងតារាងសងប្រាក់នៅការិយាល័យរុងរឿងឫនៅផ្ទះអតិថិជន</td>
 	            	</tr>
-	            	 
-					 
 	            </table>
-	            
-	            
-	            
-	            
-	            
-	            
-	            
 	            <table width="100%" cellpadding="3">
 	            	<tr class="font_bold" style="height:25px;">
 	            		<td align="center" valign="bottom" style="font-family:'Khmer OS Muol'"><?php echo $tr->translate('ACCOUNTING_SIGN');?></td>
@@ -173,18 +151,6 @@ td p{ margin-top:0px !important;}
 	            		<td align="center" height="75px" valign="bottom">
 	            			<?php echo ($client['displayclient']==1)? $client['client_name_kh']: $client['client_name_en'] ;?></td>
 	            	</tr>
-					<tr>
-						<td colspan="3">
-						<style>
-						ul li{list-style-type:none; font-size:7px;}
-						</style>
-						<span style="font-size:10px;font-weight:bold">***កំណត់សម្គាល់៖</span>
-						<ul>
-<li>១. អតិថិជនត្រូវសងប្រាក់ឲ្យបានទៀងទាត់តាមតារាងបង់ប្រាក់</li>
-<li>២. រាល់ការបង់ប្រាក់ចំថ្ងៃឈប់សំរាក់ សៅរ៍ អាទិត្យ ឬថ្ងៃបុណ្យត្រូវបង់ប្រាក់ ១ថ្ងៃមុនកាលកំណត់សង<li>
-<li>៣. ការមិនគោរពតាមកិច្ចសន្យាក្រុមហ៊ុននឹងចាត់វិធានការណ៍តាមផ្លូវច្បាប់<li><td>
-
-					</tr>
 	            </table>
 	    	</td>
 	    </tr>

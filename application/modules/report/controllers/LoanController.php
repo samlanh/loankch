@@ -423,13 +423,51 @@ function rptPaymentschedulesAction(){
 	$form = $frm->FrmSearchLoadSchedule();
 	Application_Model_Decorator::removeAllDecorator($form);
 	$this->view->form_filter = $form;
-// 	$db= new Application_Model_DbTable_DbGlobal();
 	$day_inkhmer = $db->getDayInkhmerBystr(null);
 	$this->view->day_inkhmer = $day_inkhmer;
 	
 	$key = new Application_Model_DbTable_DbKeycode();
 	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
 	
+ }
+ function rptUpdatepaymentAction(){
+ 	if($this->getRequest()->isPost()){
+ 		$_data = $this->getRequest()->getPost();
+ 		try {
+ 			$_dbmodel = new Loan_Model_DbTable_DbLoanIL();
+ 			$_dbmodel->updatePaymentStatus($_data);
+ 			Application_Form_FrmMessage::Sucessfull("UPDATE_SUCESS","/report/loan/rpt-loan-disburse");
+ 		}catch (Exception $e) {
+ 			Application_Form_FrmMessage::message("INSERT_FAIL");
+ 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+ 		}
+ 	}
+ 	$db = new Report_Model_DbTable_DbRptPaymentSchedule();
+ 	$id =$this->getRequest()->getParam('id');
+ 	$row = $db->getPaymentSchedule($id);
+ 	$this->view->tran_schedule=$row;
+ 	if(empty($row)){
+ 		Application_Form_FrmMessage::Sucessfull("RECORD_NOT_EXIST",'/report/loan/paymentschedule-list');
+ 	}
+ 	$db = new Application_Model_DbTable_DbGlobal();
+ 	$rs = $db->getClientByMemberId(@$row[0]['member_id']);
+ 	if($rs['loan_type']==2){//if loan group
+ 		$this->_redirect('report/loan/rpt-groupmember/id/'.$row[0]['member_id']);
+ 	}else{
+ 
+ 	}
+ 	$this->view->client =$rs;
+ 	$frm = new Application_Form_FrmSearchGlobal();
+ 	$form = $frm->FrmSearchLoadSchedule();
+ 	Application_Model_Decorator::removeAllDecorator($form);
+ 	$this->view->form_filter = $form;
+ 	$day_inkhmer = $db->getDayInkhmerBystr(null);
+ 	$this->view->day_inkhmer = $day_inkhmer;
+ 
+ 	$key = new Application_Model_DbTable_DbKeycode();
+ 	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
+ 	$this->view->id = $id;
+ 
  }
  function rptMemberschedulesAction(){//for schedule member
  	$db = new Report_Model_DbTable_DbRptPaymentSchedule();

@@ -1,5 +1,5 @@
 <?php 
-Class Loan_Form_FrmTransfer extends Zend_Dojo_Form {
+Class Loan_Form_FrmTransferzone extends Zend_Dojo_Form {
 	protected $tr;
 	public function init()
 	{
@@ -81,12 +81,8 @@ Class Loan_Form_FrmTransfer extends Zend_Dojo_Form {
 		$co_code->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
-// 				'onchange'=>'getClientInfo();'
 		));
 
-// 		$opt= $db->getClientByTypes(1);
-// 		$co_code->setMultiOptions($opt);
-		
 		$formc_co = new Zend_Dojo_Form_Element_FilteringSelect('formc_co');
 		$formc_co->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
@@ -100,9 +96,6 @@ Class Loan_Form_FrmTransfer extends Zend_Dojo_Form {
 			$options_from[$row_from['co_id']] = $row_from['co_khname'];
 		}
 		$formc_co->setMultiOptions($options_from);
-		
-// 		$options = $db->getClientByTypes(2);
-// 		$formc_co->setMultiOptions($options);
 		
 		$to_co = new Zend_Dojo_Form_Element_FilteringSelect('to_co');
 		$to_co->setAttribs(array(
@@ -145,18 +138,14 @@ Class Loan_Form_FrmTransfer extends Zend_Dojo_Form {
 		$user_id->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
-				//'onchange'=>"getClientInfo(1);"
 		));
 		$row_froms = $db_co->getcoinfo();
 		$options_from =array(''=>"------Select------");
 		if (!empty($row_froms))
 			foreach ($row_froms AS $row_from){
-			//$options_from[$row_from['co_id']] = $row_from['user_id'];
 		}
 		$user_id->setMultiOptions($options_from);
 		
-	
-
 		$_arr = array(1=>$this->tr->translate("ACTIVE"),0=>$this->tr->translate("DACTIVE"));
 		$_status = new Zend_Dojo_Form_Element_FilteringSelect("status");
 		$_status->setMultiOptions($_arr);
@@ -166,18 +155,14 @@ Class Loan_Form_FrmTransfer extends Zend_Dojo_Form {
 				'missingMessage'=>'Invalid Module!',
 				'class'=>'fullside'));
 		
-		//$id = new Zend_Form_Element_Hidden("id");
 		if($data!=null){				
 			$branch_name->setValue($data['branch_id']);
-			$co_name->setValue($data['code_from']);
-			$formc_co->setValue($data['from']);
-			$to_co->setValue($data['to']);
-			$to_co_code->setValue($data['code_to']);			
+			$zo_name->setValue($data['from_zone']);
+			$to_co->setValue($data['to_co']);			
 			$_status->setValue($data['status']);
 			$_date->setValue($data['date']);
 			$note->setValue($data['note']);
-			$zo_name->setValue($data['zone_name']);
-			
+			$to_co_code->setValue($data['to_co']);
 		}		
 		
 		$this->addElements(array($zo_name,$_title,$_btn_search,$co_name,$_status,$branch_name,$_date,$co_code,$formc_co,$to_co,$to_co_code,$note,$user_id));

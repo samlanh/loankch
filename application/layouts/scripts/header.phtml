@@ -16,6 +16,7 @@
       $acl=$this->url(array('module'=>'rsvacl','controller'=>'index','action'=>'index'), null, true);
       $setting=$this->url(array('module'=>'setting','controller'=>'index','action'=>'index'), null, true);
       $saving_acc=$this->url(array('module'=>'saving','controller'=>'index','action'=>'index'), null, true);
+      $capital=$this->url(array('module'=>'capital','controller'=>'index','action'=>'index'), null, true);
       $module=Zend_Controller_Front::getInstance()->getRequest()->getModuleName();
 	  $item_arr=array(
 		'home'=>'<li class="link">
@@ -48,6 +49,11 @@
 			  			<span>'.$tr->translate("TELLER_Module").'</span>
 			  		</a>
 	    </li>',
+	  	'capital'=>'<li class="link">
+		  	<a  href="'.$capital.'">
+		  		<span>'.$tr->translate("CAPITAL").'</span>
+		  	</a>
+	  		</li>',
 	  	/*'accounting'=>'<li class="link">
 			  		<a title="ព័ត៏មានចំណាយផ្សេងៗ" href="'.$accounting_view.'">
 			  			<span>'.$tr->translate("Accounting").'</span>

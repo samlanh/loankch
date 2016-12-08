@@ -1105,7 +1105,7 @@ $sql = " SELECT g.co_id,m.client_id  FROM  `ln_loan_member` AS m , `ln_loan_grou
   	$options=array(''=>"---Select Loan Number---");
   	if($opt!=null){
   		if(!empty($result))foreach($result AS $row){
-  			$options[$row['member_id']]=$row['loan_number'];
+  			$options[$row['member_id']]= $row['customer_name']."-".$row['loan_number'];
   		}
   		return $options;
   	}else{

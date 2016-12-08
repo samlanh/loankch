@@ -186,7 +186,36 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     	$array = array_values($array);
     	return Loan_Model_DbTable_DbIRRFunction::IRR($array);
     }
-    
+    function updatePaymentStatus($data){
+    	$db = $this->getAdapter();
+    	$db->beginTransaction();
+    	try{
+    		$tranlist = explode(',',$data['indentity']);
+			$this->_name='ln_loanmember_funddetail';
+    		foreach ($tranlist as $i) {
+    			$arr = array(
+    					'is_completed'=>$data['payment_option'.$i],
+    					'date_payment'=>$data['datepayment_'.$i],
+    					'principal_permonth'=>$data['principal_'.$i],
+    					'principle_after'=>$data['principal_'.$i],
+    					'total_interest'=>$data['interest_'.$i],
+    					'total_interest_after'=>$data['interest_'.$i],
+    					'total_payment'=>$data['interest_'.$i]+$data['principal_'.$i],
+    					'total_payment_after'=>$data['interest_'.$i]+$data['principal_'.$i],
+    					);
+    			$where="id = ".$data['fundid_'.$i];
+//     			echo $data['fundid_'.$i];
+//     			exit();
+    			$this->update($arr, $where);
+    		}
+    		$db->commit();
+    		return 1;
+    	}catch (Exception $e){
+    			$db->rollBack();
+    			Application_Form_FrmMessage::message("INSERT_FAIL");
+    			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+    	}
+    }
     public function addNewLoanIL($data){
     	$db = $this->getAdapter();
     	$db->beginTransaction();

@@ -15,18 +15,13 @@
 	dojo.require("dijit.form.DateTextBox");
 	dojo.require("dijit.form.NumberTextBox");
 </script>
-<form id='frm_add_tran' action="<?php echo $this->url(array('module'=>'loan','controller'=>'transferco','action'=>'add')); ?>" 
+<form id='frm_add_tran' action="<?php echo $this->url(array('module'=>'loan','controller'=>'transferzone','action'=>'edit')); ?>" 
 				dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <script type="dojo/method" event="onSubmit">			
   if(this.validate()) {
     if(dijit.byId('branch_name').get('value')==''){
      alert('Please Select Branch');
      dijit.byId('branch_name').focus();
-     return false;
-   	}
-    if(dijit.byId('formc_co').get('value')==''){
-     alert('Please Select From CO');
-     dijit.byId('formc_co').focus();
      return false;
    	}
 	if(dijit.byId('to_co_code').get('value')==''){
@@ -52,10 +47,10 @@
 							<td><?php  echo $frm->getElement('Date');?></td>
 						</tr>
 						<tr>
-							<td><?php echo $tr->translate("FROM_CO")?></td>
-							<td><?php  echo $frm->getElement('co_code');?></td>
-							<td><?php echo $tr->translate("FROM_CO")?></td>
-							<td><?php  echo $frm->getElement('formc_co');?></td>
+							<td><?php echo $tr->translate("ZONE_NAME")?></td>
+							<td><?php  echo $frm->getElement('zone_name');?></td>
+							<td><?php echo $tr->translate("NOTE")?></td>
+							<td><?php  echo $frm->getElement('Note');?></td>
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("TO_CO")?></td>
@@ -66,8 +61,6 @@
 					    <tr>  
 					        <td><?php echo $tr->translate("STATUS")?></td>
 							<td><?php  echo $frm->getElement('status');?></td>
-							<td><?php echo $tr->translate("NOTE")?></td>
-							<td><?php  echo $frm->getElement('Note');?></td>
 							<td></td>
 							<td></td>
 						</tr>
@@ -87,15 +80,8 @@ dojo.require("dijit.form.Textarea");
 	function getClientInfo(type){
 		if(type==1){						
 			id = dijit.byId("co_code").get('value');
-			dijit.byId("formc_co").attr('value',id);
 			dijit.byId("co_code").attr('value',id);
-			
-		}else if(type==2){
-			id = dijit.byId("formc_co").get('value');
-			dijit.byId("formc_co").attr('value',id);
-			dijit.byId("co_code").attr('value',id);
-		}
-		else if(type==3){		
+		}else if(type==3){		
 			to = dijit.byId("to_co").get('value');		
 			dijit.byId("to_co_code").attr('value',to);
 			dijit.byId("to_co").attr('value',to);
