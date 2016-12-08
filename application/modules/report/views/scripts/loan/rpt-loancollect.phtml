@@ -345,7 +345,7 @@ th{padding: 5px;}
                		</td>
                		<td align="right" style="white-space: nowrap;">&nbsp;<?php echo number_format($rs["service_charge"],2).' '.$rs['currency_type'];?>&nbsp;</td>
                		<td align="right" style="white-space: nowrap;">&nbsp;<?php echo number_format($total_payment,2).' '.$rs['currency_type'];?>&nbsp;</td>
-               		<td align="center">&nbsp;&nbsp;<?php echo $total_late_day." Days";?> &nbsp;</td>
+               		<td align="center">&nbsp;&nbsp;<?php echo number_format($total_late_day,0)." Days";?> &nbsp;</td>
                		<td align="center">&nbsp;&nbsp;<?php echo $rs["amount_late"]." ដង";?> &nbsp;</td>
                		<td align="center">&nbsp;&nbsp;<?php echo date_format(date_create($rs["date_payment"]),'d-m-Y');?>&nbsp;</td>
                 </tr>

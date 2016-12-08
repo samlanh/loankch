@@ -17,7 +17,7 @@
   $rpt_exchangemoney=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-xchange'), null, true);
 
   $rpt_commission=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-commission'), null, true);
-
+  $rpt_loandialy=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-dailyloan'), null, true);
   
   $rpt_loandisburseco=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-disburse-co'), null, true);
   $rpt_npl=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-npl'), null, true);
@@ -58,6 +58,7 @@
   <div style="background:#ccc; width: 100%;">
   	<ul class="link-rpt">
   		<li><a href="<?php echo $rpt_loanrelease;?>"><?php echo $tr->translate('LOAN_DISBURSE');?></a></li>
+  		<li><a href="<?php echo $rpt_loandialy;?>"><?php echo $tr->translate('DIALYAMOUNT_LOAN');?></a></li>
   		<li><a href="<?php echo $rpt_loandisburseco;?>"><?php echo $tr->translate('LOAN_DISBURSE_BY_CO');?></a></li>
   		<li><a href="<?php echo $rpt_loancollect;?>"><?php echo $tr->translate('REPORT_LOAN_COLLECT');?></a></li>
   		<li><a href="<?php echo $rpt_dailypayment;?>"><?php echo $tr->translate('RPT_CLIENT_PAYMENT');?></a></li>

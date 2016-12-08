@@ -36,6 +36,31 @@ function rptLoanDisburseAction(){//release all loan
   	$key = new Application_Model_DbTable_DbKeycode();
   	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
   }
+  function rptDailyloanAction(){//release all loan
+  	$db  = new Report_Model_DbTable_DbLoan();
+  	if($this->getRequest()->isPost()){
+  		$search = $this->getRequest()->getPost();
+  	}
+  	else{
+  		$search = array(
+  				'branch_id'=>'',
+  				'client_name'=>'',
+  				'pay_every'=>-1,
+  				'co_id'=>'',
+  				'start_date'=> date('Y-m-d'),
+  				'end_date'=>date('Y-m-d'));
+  	}
+  	$this->view->loanrelease_list=$db->getAllDailyLoan($search);
+  	$this->view->list_end_date=$search;
+  	 
+  	$frm = new Loan_Form_FrmSearchLoan();
+  	$frm = $frm->AdvanceSearch();
+  	Application_Model_Decorator::removeAllDecorator($frm);
+  	$this->view->frm_search = $frm;
+  	 
+  	$key = new Application_Model_DbTable_DbKeycode();
+  	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
+  }
   function rptLoanDisburseCoAction(){//realease by co
 	  $db  = new Report_Model_DbTable_DbLoan();
 	  if($this->getRequest()->isPost()){

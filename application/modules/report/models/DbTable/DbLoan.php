@@ -41,6 +41,51 @@ class Report_Model_DbTable_DbLoan extends Zend_Db_Table_Abstract
       	 $order = " ORDER BY member_id DESC ";
       	 return $db->fetchAll($sql.$where.$order);
       }
+      public function getAllDailyLoan($search = null){//rpt-loan-released/
+      	$db = $this->getAdapter();
+      	$sql = "SELECT v.*,
+      		(SELECT COUNT(member_id) FROM `ln_loanmember_funddetail` WHERE member_id=v.member_id AND STATUS=1 AND is_completed=1) AS installment_paid
+      	FROM v_dailyloan AS v WHERE 1 ";
+      	$where ='';
+      	
+      	
+//       	(SELECT count(total_interest) FROM `ln_loanmember_funddetail` AS lf WHERE lf. member_id= l.member_id AND status=1 AND lf.is_completed=0 LIMIT 1)  AS total_interest ,
+      
+      	$from_date =(empty($search['start_date']))? '1': " v.date_release >= '".$search['start_date']." 00:00:00'";
+      	$to_date = (empty($search['end_date']))? '1': " v.date_release <= '".$search['end_date']." 23:59:59'";
+      	$where.= " AND ".$from_date." AND ".$to_date;
+      
+      	if($search['branch_id']>0){
+      		$where.=" AND v.branch_id = ".$search['branch_id'];
+      	}
+      	if($search['client_name']>0){
+      		$where.=" AND v.client_id = ".$search['client_name'];
+      	}
+      	if($search['co_id']>0){
+      		$where.=" AND v.co_id = ".$search['co_id'];
+      	}
+      	if($search['pay_every']>0){
+      		$where.=" AND v.pay_term_id = ".$search['pay_every'];
+      	}
+      	 
+      	if(!empty($search['adv_search'])){
+      		$s_where = array();
+      		$s_search = addslashes(trim($search['adv_search']));
+      		$s_where[] = " v.branch_name LIKE '%{$s_search}%'";
+      		$s_where[] = " v.loan_number LIKE '%{$s_search}%'";
+      		$s_where[] = " v.client_number LIKE '%{$s_search}%'";
+      		$s_where[] = " v.client_name LIKE '%{$s_search}%'";
+      		$s_where[] = " v.co_name LIKE '%{$s_search}%'";
+      		$s_where[] = " v.total_capital LIKE '%{$s_search}%'";
+      		$s_where[] = " v.other_fee LIKE '%{$s_search}%'";
+      		$s_where[] = " v.admin_fee LIKE '%{$s_search}%'";
+      		$s_where[] = " v.interest_rate LIKE '%{$s_search}%'";
+      		$s_where[] = " v.loan_type LIKE '%{$s_search}%'";
+      		$where .=' AND ( '.implode(' OR ',$s_where).')';
+      	}
+      	$order = " ORDER BY v.member_id DESC ";
+      	return $db->fetchAll($sql.$where.$order);
+      }
       public function getAllLoanCo($search = null){//rpt-loan-released
       	$db = $this->getAdapter();
 

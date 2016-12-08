@@ -612,7 +612,8 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     							'branch_id'=>$data['branch_id'],
     							'status'=>1,
     							'amount_day'=>$old_amount_day,
-    							'collect_by'=>$data['co_id']
+    							'collect_by'=>$data['co_id'],
+    							'installment_amount'=>$i
     					);
     					$this->insert($datapayment);
     					$amount_collect=0;
@@ -687,6 +688,7 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     						'collect_by'=>$data['co_id'],
     						'penelize_service'=>$penelize_service,
     						'saving_amount'=>$saving,
+    						'installment_amount'=>$i
     				);
     				$this->insert($datapayment);
     				
@@ -1120,7 +1122,8 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     						'branch_id'=>$data['branch_id'],
     						'status'=>1,
     						'amount_day'=>$old_amount_day,
-    						'collect_by'=>$data['co_id']
+    						'collect_by'=>$data['co_id'],
+    						'installment_amount'=>$i
     				);
     				
     				$this->insert($datapayment);
@@ -1186,7 +1189,8 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     					'branch_id'=>$data['branch_id'],
     					'status'=>1,
     					'amount_day'=>$old_amount_day,
-    					'collect_by'=>$data['co_id']
+    					'collect_by'=>$data['co_id'],
+    			 		'installment_amount'=>$i
     			);
     			$this->insert($datapayment);
     		}
