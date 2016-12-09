@@ -28,6 +28,8 @@
   
   $rpt_parco  =$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-parbyco'), null, true);
   $rpt_area =$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loanarea'), null, true);
+  $rpt_profitco =$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-profitco'), null, true);
+  $rpt_transferzone =$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-trasferzone'), null, true);
   
   
   
@@ -70,8 +72,9 @@
   		<li><a href="<?php echo $rpt_loanoustading;?>"><?php echo $tr->translate('LOAN_OUTSTADING');?></a></li>
 		<li><a href="<?php echo $rpt_loanoustadingvillage;?>"><?php echo $tr->translate('LOAN_OUTSTADING_VILLAGE');?></a></li>
 		<li><a href="<?php echo $rpt_expense;?>"><?php echo $tr->translate('REPORT_EXPENSE');?></a></li>
-		<li><a href="<?php //echo $rpt_exchanges;?>"><?php echo $tr->translate('EXCHANGES');?></a></li>
 		<li><a href="<?php echo $rpt_commission;?>"><?php echo $tr->translate('COMMISSION');?></a></li>
+		<li><a href="<?php echo $rpt_profitco;?>"><?php echo $tr->translate('PROFITCO');?></a></li>
+		<li><a href="<?php echo $rpt_transferzone;?>"><?php echo $tr->translate('TRANSFERZONE');?></a></li>
 		<?php 
 		$session_user=new Zend_Session_Namespace('auth');
 	    $level =  $session_user->level;  

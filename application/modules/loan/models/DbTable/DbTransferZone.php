@@ -5,7 +5,7 @@ class Loan_Model_DbTable_DbTransferZone extends Zend_Db_Table_Abstract
 	protected $_name = 'ln_tranfser_zone';
     public function getzoneinfo(){
     	$db = $this->getAdapter();
-    	$sql = "SELECT zone_id ,zone_name FROM `ln_zone`";
+    	$sql = "SELECT zone_id ,zone_name FROM `ln_zone` WHERE zone_name!='' ";
     	return $db->fetchAll($sql);
     }
     public function getUserId(){

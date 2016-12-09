@@ -120,7 +120,7 @@ Class Loan_Form_FrmTransferzone extends Zend_Dojo_Form {
 				'onchange'=>"getClientInfo(4);"
 		));
 		$row_froms = $db_co->getcoinfo();
-		$options_from =array(''=>"---Select To CO Code---");
+		$options_from =array(''=>"---Select To CO ---");
 		if (!empty($row_froms))
 			foreach ($row_froms AS $row_from){
 			$options_from[$row_from['co_id']] = $row_from['co_code'];

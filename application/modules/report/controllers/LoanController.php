@@ -168,6 +168,36 @@ function rptLoanDisburseAction(){//release all loan
 	Application_Model_Decorator::removeAllDecorator($frm);
 	$this->view->frm_search = $frm;
   }
+  
+  function rptCommissionAction(){
+  	$db  = new Report_Model_DbTable_DbLoan();
+  	$key = new Application_Model_DbTable_DbKeycode();
+  	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
+  	if($this->getRequest()->isPost()){
+  		$search = $this->getRequest()->getPost();
+  	}else {
+  		$search = array(
+  				'adv_search' => '',
+  				'status_search' => -1,
+  				'status' => -1,
+  				'branch_id' => "",
+  				'client_name' => "",
+  				'co_id' => "",
+  				'start_date'=> date('Y-m-d'),
+  				'end_date'=>date('Y-m-d')
+  		);
+  	}
+  	$this->view->loantotalcollect_list =$rs=$db->getALLCommission($search);
+  
+  	// 	$this->view->list_end_date=$search;
+  
+  	$this->view->list_end_date = $search;
+  	$frm = new Loan_Form_FrmSearchLoan();
+  	$frm = $frm->AdvanceSearch();
+  	Application_Model_Decorator::removeAllDecorator($frm);
+  	$this->view->frm_search = $frm;
+  }
+  
   function rptLoanLateAction(){
 
   	if($this->getRequest()->isPost()){
@@ -776,6 +806,43 @@ function rptPaymentschedulesAction(){
  	Application_Model_Decorator::removeAllDecorator($frm);
  	$this->view->frm_search = $frm;
  }
+ 
+ 
+ 
+function rptLoanTrasferzoneAction(){//release all loan
+ 	$db  = new Report_Model_DbTable_DbLoan();
+ 	$key = new Application_Model_DbTable_DbKeycode();
+ 	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
+ 	if($this->getRequest()->isPost()){
+ 		$search = $this->getRequest()->getPost();
+ 	}
+ 	else{
+ 		$search = array(
+ 				       'adv_search'=>'',
+ 				       'branch_name'=>'-1',
+						'co_code'=>'1',
+						'start_date'=> date('Y-m-01'),
+						'end_date'=>date('Y-m-d'),
+						'txt_search'=>'',
+						'status' => '',
+						'note'=>'',
+ 				);
+ 	}	
+ 	$db = new Report_Model_DbTable_DbLoan();
+ 	$rs_rows= $db->getAllinfoZone($search);//call frome model
+ 	$this->view->loantrasferzone=$db->getAllinfoZone($search);
+ 	$this->view->list_end_date=$search;
+ 	 
+ 	$frm = new Loan_Form_FrmSearchLoan();
+ 	$frm = $frm->AdvanceSearch();
+ 	Application_Model_Decorator::removeAllDecorator($frm);
+ 	$this->view->frm_search = $frm;
+ }
+ 
+ 
+ 
+ 
+ 
  function rptLoanClientcoAction()
  {
  	$db  = new Report_Model_DbTable_DbLoan();
@@ -1056,6 +1123,36 @@ function rptPaymentschedulesAction(){
  	$key = new Application_Model_DbTable_DbKeycode();
  	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
  }
+ function rptProfitcoAction(){
+ 	$db  = new Report_Model_DbTable_DbLoan();
+ 
+ 	if($this->getRequest()->isPost()){
+ 		$search = $this->getRequest()->getPost();
+ 	}else {
+ 		$search = array(
+ 				'adv_search' => '',
+ 				'status_search' => -1,
+ 				'status' => -1,
+ 				'branch_id' => "",
+ 				'client_name' => "",
+ 				'co_id' => "",
+ 				'start_date' =>date('Y-m-d'),
+ 				'end_date' => date('Y-m-d'),
+ 		);
+ 	}
+ 	$this->view->loantotalcollect_list =$db->getAllProfitco($search);
+ 	$this->view->list_end_date=$search;
+ 	$frm = new Loan_Form_FrmSearchLoan();
+ 	$frm = $frm->AdvanceSearch();
+ 	Application_Model_Decorator::removeAllDecorator($frm);
+ 	$this->view->frm_search = $frm;
+ 
+ 	$key = new Application_Model_DbTable_DbKeycode();
+ 	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
+ 
+ 	//  	print_r($db->getALLLoanPayment($search));
+ }
+ 
  
 }
 

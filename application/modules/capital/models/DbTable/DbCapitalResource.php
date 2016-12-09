@@ -231,8 +231,8 @@ class Capital_Model_DbTable_DbCapitalResource extends Zend_Db_Table_Abstract
    		}
     }
 }
-/*
-class Capital_Model_DbTable_DbCapitalResource extends Zend_Db_Table_Abstract
+
+class Capital_Model_DbTable_DbCapitalResourcea extends Zend_Db_Table_Abstract
 {
     protected $_name ='ln_branch_capital';
     public function getCapiitalById($id){
