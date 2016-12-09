@@ -190,6 +190,13 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$db->beginTransaction();
     	try{
+    		$this->_name='ln_loan_member';
+    		$arr = array(
+    				'loan_number'=>$data['loan_code']);
+    		$where=" member_id =".$data['id'];
+    		$this->update($arr, $where);
+    		
+    		
     		$tranlist = explode(',',$data['indentity']);
 			$this->_name='ln_loanmember_funddetail';
     		foreach ($tranlist as $i) {
@@ -242,13 +249,11 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     				'for_loantype'=>$data['loan_type'],
     				'user_id'=>$this->getUserId()
     				);
-    		
     		$g_id = $this->insert($datagroup);//add group loan
     		
     		unset($datagroup);
     		$dbtable = new Application_Model_DbTable_DbGlobal();
     		$loan_number = $dbtable->getLoanNumber($data);
-    		
     			$datamember = array(
     					'group_id'=>$g_id,
     					'loan_number'=>$loan_number,//$data['loan_code'],
@@ -593,7 +598,13 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     				$old_pri_permonth = $old_pri_permonth+$pri_permonth;
     				$old_interest_paymonth = $this->round_up_currency($curr_type,($old_interest_paymonth+$interest_paymonth));
     				$old_amount_day =$old_amount_day+ $amount_day;
-    				
+    				if($i==$loop_payment){
+    					$this->_name='ln_loan_group';
+	    				$datagroup = array('date_line'=>$next_payment);
+	    				$where =" g_id= ".$g_id;
+	    				$this->update($datagroup, $where);//add group loan
+	    				$this->_name='ln_loanmember_funddetail';
+    				}
     				
     				if($data['amount_collect']==$amount_collect){
     					$datapayment = array(
@@ -691,6 +702,11 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     						'installment_amount'=>$i
     				);
     				$this->insert($datapayment);
+    				
+    					$this->_name='ln_loan_group';
+    					$datagroup = array('date_line'=>$next_payment);
+    					$where =" g_id= ".$g_id;
+    					$this->update($datagroup, $where);//add group loan
     				
     			}
     		$db->commit();
@@ -1103,6 +1119,14 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     			$old_pri_permonth = $old_pri_permonth+$pri_permonth;
     			$old_interest_paymonth = $this->round_up_currency($curr_type,($old_interest_paymonth+$interest_paymonth));
     			$old_amount_day =$old_amount_day+ $amount_day;
+    			
+    			if($i==$loop_payment){
+    				$this->_name='ln_loan_group';
+    				$datagroup = array('date_line'=>$next_payment);
+    				$where =" g_id= ".$g_id;
+    				$this->update($datagroup, $where);//add group loan
+    				$this->_name='ln_loanmember_funddetail';
+    			}
     	
     	
     			if($data['amount_collect']==$amount_collect){
@@ -1193,6 +1217,12 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     			 		'installment_amount'=>$i
     			);
     			$this->insert($datapayment);
+    			
+    			$this->_name='ln_loan_group';
+    			$datagroup = array('date_line'=>$next_payment);
+    			$where =" g_id= ".$g_id;
+    			$this->update($datagroup, $where);//add group loan
+    			$this->_name='ln_loanmember_funddetail';
     		}
     		$db->commit();
     		return 1;

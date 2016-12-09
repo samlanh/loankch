@@ -60,6 +60,10 @@ function rptLoanDisburseAction(){//release all loan
   	 
   	$key = new Application_Model_DbTable_DbKeycode();
   	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
+  	
+  	$db = new Application_Model_DbTable_DbGlobal();
+  	$day_inkhmer = $db->getDayInkhmerBystr(null);
+  	$this->view->day_inkhmer = $day_inkhmer;
   }
   function rptLoanDisburseCoAction(){//realease by co
 	  $db  = new Report_Model_DbTable_DbLoan();

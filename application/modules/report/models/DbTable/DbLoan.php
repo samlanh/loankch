@@ -43,13 +43,18 @@ class Report_Model_DbTable_DbLoan extends Zend_Db_Table_Abstract
       }
       public function getAllDailyLoan($search = null){//rpt-loan-released/
       	$db = $this->getAdapter();
+      	$end_date = $search['end_date'];
       	$sql = "SELECT v.*,
-      		(SELECT COUNT(member_id) FROM `ln_loanmember_funddetail` WHERE member_id=v.member_id AND STATUS=1 AND is_completed=1) AS installment_paid
-      	FROM v_dailyloan AS v WHERE 1 ";
+      		(SELECT COUNT(f.member_id) FROM `ln_loanmember_funddetail` as f WHERE f.member_id=v.member_id AND f.status=1 AND f.is_completed=1 limit 1) AS installment_paid,
+      		(SELECT count(f.id) FROM ln_loanmember_funddetail as f WHERE f.is_completed=0 AND f.member_id=v.member_id AND f.date_payment <'".$end_date."' GROUP BY v.member_id ORDER BY f.`date_payment` ASC LIMIT 1) AS amount_late,
+      		(SELECT SUM(f.total_principal) FROM  ln_loanmember_funddetail as f WHERE f.is_completed=0 AND f.member_id=v.member_id AND f.date_payment <'".$end_date."'  LIMIT 1) AS total_principal,
+      		(SELECT SUM(f.principle_after) FROM  ln_loanmember_funddetail as f WHERE f.is_completed=0 AND f.member_id=v.member_id AND f.date_payment <'".$end_date."' LIMIT 1) AS principle_after,
+      		(SELECT SUM(f.total_interest_after) FROM  ln_loanmember_funddetail as f WHERE f.is_completed=0 AND f.member_id=v.member_id AND f.date_payment <'".$end_date."' LIMIT 1) AS total_interest_after,
+      		(SELECT SUM(f.total_payment_after) FROM  ln_loanmember_funddetail as f WHERE f.is_completed=0 AND f.member_id=v.member_id AND f.date_payment <'".$end_date."' LIMIT 1) AS total_payment_after,
+			(SELECT SUM(f.penelize) FROM  ln_loanmember_funddetail as f WHERE f.is_completed=0 AND f.member_id=v.member_id AND f.date_payment <'".$end_date."' LIMIT 1) AS penelize,
+      		(SELECT SUM(f.service_charge) FROM  ln_loanmember_funddetail as f WHERE f.is_completed=0 AND f.member_id=v.member_id AND f.date_payment <'".$end_date."' LIMIT 1) AS service_charge
+      	  FROM v_dailyloan AS v WHERE 1 ";
       	$where ='';
-      	
-      	
-//       	(SELECT count(total_interest) FROM `ln_loanmember_funddetail` AS lf WHERE lf. member_id= l.member_id AND status=1 AND lf.is_completed=0 LIMIT 1)  AS total_interest ,
       
       	$from_date =(empty($search['start_date']))? '1': " v.date_release >= '".$search['start_date']." 00:00:00'";
       	$to_date = (empty($search['end_date']))? '1': " v.date_release <= '".$search['end_date']." 23:59:59'";
@@ -77,13 +82,11 @@ class Report_Model_DbTable_DbLoan extends Zend_Db_Table_Abstract
       		$s_where[] = " v.client_name LIKE '%{$s_search}%'";
       		$s_where[] = " v.co_name LIKE '%{$s_search}%'";
       		$s_where[] = " v.total_capital LIKE '%{$s_search}%'";
-      		$s_where[] = " v.other_fee LIKE '%{$s_search}%'";
-      		$s_where[] = " v.admin_fee LIKE '%{$s_search}%'";
       		$s_where[] = " v.interest_rate LIKE '%{$s_search}%'";
       		$s_where[] = " v.loan_type LIKE '%{$s_search}%'";
       		$where .=' AND ( '.implode(' OR ',$s_where).')';
       	}
-      	$order = " ORDER BY v.member_id DESC ";
+      	$order = " ORDER BY (CASE DAYOFWEEK(v.first_payment) WHEN 1 THEN 8 ELSE DAYOFWEEK(v.first_payment) END),v.first_payment DESC ";
       	return $db->fetchAll($sql.$where.$order);
       }
       public function getAllLoanCo($search = null){//rpt-loan-released

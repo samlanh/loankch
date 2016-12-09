@@ -183,11 +183,8 @@ function round_up($value, $places)
     			
 				for($i=1;$i<=$loop_payment;$i++){
     				$amount_collect = $data['amount_collect'];
-//     				$day_perterm = $dbtable->getSubDaysByPaymentTerm($data['collect_termtype'],$amount_collect);//return amount day for payterm
-    			   // $str_next = $dbtable->getNextDateById($data['collect_termtype'],$data['amount_collect']);//for next,day,week,month;
     				
     				if($payment_method==1){//decline//completed
-//     					$pri_permonth = ($data['total_amount']/($data['period']-$data['graice_pariod'])*$amount_collect);
     					$pri_permonth = $data['total_amount']/(($amount_borrow_term-($data['graice_pariod']*$borrow_term))/$amount_fund_term);
     					$pri_permonth = $this->round_up_currency($curr_type, $pri_permonth);
     					if($i*$amount_collect<=$data['graice_pariod']){//check here//for graice period
@@ -211,7 +208,6 @@ function round_up($value, $places)
     						$start_date = $next_payment;
     						$next_payment = $dbtable->getNextPayment($str_next, $next_payment, $data['amount_collect'],$data['every_payamount'],$data['first_payment']);
     						
-							//$next_payment = $dbtable->checkDefaultDate($str_next, $defaultnext_payment, $data['amount_collect']);
 							$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
  
     						$interest_paymonth = $remain_principal*($data['interest_rate']/100/$borrow_term)*$amount_day;
@@ -238,7 +234,6 @@ function round_up($value, $places)
     						$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     					}
     					$interest_paymonth = $data['total_amount']*($data['interest_rate']/100/$borrow_term)*$amount_day;
-//     					$interest_paymonth = $data['total_amount']*((($amount_fund_term*$data['interest_rate'])/$borrow_term)/100)*($amount_day/$day_perterm);
     					
     				}elseif($payment_method==3){//fixed rate
     					$pri_permonth = ($data['total_amount']/($amount_borrow_term/$amount_fund_term));
@@ -439,6 +434,13 @@ function round_up($value, $places)
     				$old_interest_paymonth = $this->round_up_currency($curr_type,($old_interest_paymonth+$interest_paymonth));
     				$old_amount_day =$old_amount_day+ $amount_day;
     				
+    				if($i==$loop_payment){
+    					$this->_name='ln_loan_group';
+    					$datagroup = array('date_line'=>$next_payment);
+    					$where =" g_id= ".$g_id;
+    					$this->update($datagroup, $where);//add group loan
+    					$this->_name='ln_loanmember_funddetail';
+    				}
     				
     				if($data['amount_collect']==$amount_collect){
     					
@@ -529,6 +531,12 @@ function round_up($value, $places)
     						'collect_by'=>$data['co_id']
     				);
     				$this->insert($datapayment);
+    				
+    				$this->_name='ln_loan_group';
+    				$datagroup = array('date_line'=>$next_payment);
+    				$where =" g_id= ".$g_id;
+    				$this->update($datagroup, $where);//add group loan
+    				$this->_name='ln_loanmember_funddetail';
     				
     			}
     		   $db->commit();
