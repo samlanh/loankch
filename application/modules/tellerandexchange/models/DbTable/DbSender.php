@@ -1,7 +1,7 @@
 <?php
-class Accounting_Model_DbTable_DbTransactionIncome extends Zend_Db_Table_Abstract
+class Tellerandexchange_Model_DbTable_DbSender extends Zend_Db_Table_Abstract
 {
-	protected $_name = 'ln_income';
+	protected $_name = 'ln_sender';
 	public function getUserId(){
 		$session_user=new Zend_Session_Namespace('auth');
 		return $session_user->user_id;
@@ -10,7 +10,8 @@ class Accounting_Model_DbTable_DbTransactionIncome extends Zend_Db_Table_Abstrac
 	function addexpense($data){
 		$data = array(
 				'branch_id'=>$data['branch_id'],
-				'account_id'=>$data['account_id'],
+				'customer'=>$data['customer'],
+				//'account_id'=>$data['account_id'],
 				'total_amount'=>$data['total_amount'],
 				//'title'=>$data['for_date'],
 				'invoice'=>$data['invoice'],
@@ -28,7 +29,8 @@ class Accounting_Model_DbTable_DbTransactionIncome extends Zend_Db_Table_Abstrac
  function updatExpense($data){
 	$arr = array(
 				'branch_id'=>$data['branch_id'],
-				'account_id'=>$data['account_id'],
+				//'account_id'=>$data['account_id'],
+				'customer'=>$data['customer'],
 				'total_amount'=>$data['total_amount'],
 				'curr_type'=>$data['currency_type'],
 				'invoice'=>$data['invoice'],

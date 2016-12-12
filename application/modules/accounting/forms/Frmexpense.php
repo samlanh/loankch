@@ -14,6 +14,14 @@ Class Accounting_Form_Frmexpense extends Zend_Dojo_Form {
 				'required'=>true
 				));
 		
+		
+		$customer = new Zend_Dojo_Form_Element_ValidationTextBox('customer');
+		$customer->setAttribs(array(
+				'dojoType'=>'dijit.form.ValidationTextBox',
+				'class'=>'fullside',
+				'required'=>true
+		));
+		
 		$for_date = new Zend_Dojo_Form_Element_FilteringSelect('for_date');
 		$for_date->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
@@ -92,7 +100,8 @@ Class Accounting_Form_Frmexpense extends Zend_Dojo_Form {
 		if($data!=null){
 			
 			$_branch_id->setValue($data['branch_id']);
-			$account_id->setValue($data['account_id']);
+			//$account_id->setValue($data['account_id']);
+			//$customer->setValue($data['customer']);
 			$total_amount->setValue($data['total_amount']);
 			$for_date->setValue($data['fordate']);
 			$_Description->setValue($data['disc']);
@@ -102,7 +111,7 @@ Class Accounting_Form_Frmexpense extends Zend_Dojo_Form {
 			$id->setValue($data['id']);
 		}
 		
-		$this->addElements(array($invoice,$_currency_type,$account_id,$_Date ,$_stutas,$_Description,
+		$this->addElements(array($customer,$invoice,$_currency_type,$account_id,$_Date ,$_stutas,$_Description,
 				$total_amount,$_branch_id,$for_date,$id,));
 		return $this;
 		
