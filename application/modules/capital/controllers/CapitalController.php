@@ -22,11 +22,13 @@ class Capital_CapitalController extends Zend_Controller_Action {
 			$glClass = new Application_Model_GlobalClass();//status
  			$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL,true);
 			$list = new Application_Form_Frmtable();
-			$collumns = array("សាខា","ថ្ងៃ","សម្គាល់","ចំនួនប្រាក់ដុល្លា","ចំនួនប្រាក់រៀល","ចំនួនប្រាក់បាត","ស្ថានភាព");
+			$collumns = array("សាខា","ចំនួនប្រាក់ដុល្លា","ចំនួនប្រាក់រៀល","ចំនួនប្រាក់បាត","ប្រភេទដើមទុន","ថ្ងៃ","សម្គាល់","ស្ថានភាព");
 			$link=array(
 					'module'=>'capital','controller'=>'capital','action'=>'edit'
 			);
-			$this->view->list=$list->getCheckList(0,$collumns,$rs_rows,array('branch_namekh'=>$link));
+// 			$this->view->list=$list->getCheckList(0,$collumns,$rs_rows,array('branch_namekh'=>$link,'amount_dollar'=>$link));
+		
+			$this->view->list=$list->getCheckList(0,$collumns,$rs_rows,array());
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
 			echo $e->getMessage();

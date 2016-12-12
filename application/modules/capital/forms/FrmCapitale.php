@@ -61,6 +61,35 @@ Class Capital_Form_FrmCapitale extends Zend_Dojo_Form {
 				'Onkeyup'	=>	'validateTransfer(3);'
 		));
 		$reil->setValue(0);
+		
+		
+		
+		$usabank=new Zend_Dojo_Form_Element_NumberTextBox('usabank');
+		$usabank->setAttribs(array(
+				'dojoType'=>'dijit.form.NumberTextBox',
+				'placeHolder'   =>  '0',
+				'class'	=>	'td',
+				'Onkeyup'	=>	'validateTransfer(1);',
+		));
+		$usabank->setValue(0);
+		$bathbank=new Zend_Dojo_Form_Element_NumberTextBox('bathbank');
+		$bathbank->setAttribs(array(
+				'dojoType'=>'dijit.form.NumberTextBox',
+				'class'	=>	'td',
+				'required'	=> true,
+				'Onkeyup'	=>	'validateTransfer(2);'
+		));
+		$bathbank->setValue(0);
+		$reilbank=new Zend_Dojo_Form_Element_NumberTextBox('reilbank');
+		$reilbank->setAttribs(array(
+				'dojoType'=>'dijit.form.NumberTextBox',
+				'placeHolder'   =>  '0',
+				'class'	=>	'td',
+				'required'	=> true,
+				'Onkeyup'	=>	'validateTransfer(3);'
+		));
+		$reilbank->setValue(0);
+		
 		$id = new Zend_Form_Element_Hidden('id');
 		if($_data!=null){
 			$brance->setValue($_data['id']);
@@ -74,7 +103,7 @@ Class Capital_Form_FrmCapitale extends Zend_Dojo_Form {
 		
 		}
 		$this->addElements(array($branch,$brance,$date,$_stutas,
-				$note,$bath,$usa,$reil,$id));
+				$note,$bath,$usa,$reil,$id,$bathbank,$usabank,$reilbank));
 		return $this;
 	}
 	public function frmCapitalTransfer($_data=null)
@@ -223,7 +252,6 @@ Class Capital_Form_FrmCapitale extends Zend_Dojo_Form {
 	
 	public function frmCapitalResource($_data=null)
 	{
-		/* Form Elements & Other Definitions Here ... */
 		$brance = new Zend_Dojo_Form_Element_FilteringSelect('brance');
 		$brance->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
@@ -252,9 +280,11 @@ Class Capital_Form_FrmCapitale extends Zend_Dojo_Form {
 		$options= array(1=>"ប្រើប្រាស់",0=>"មិនប្រើប្រាស់");
 		$_stutas->setMultiOptions($options);
 		
-		$note=new Zend_Dojo_Form_Element_TextBox('note');
+		$note=new Zend_Dojo_Form_Element_Textarea('note');
 		$note->setAttribs(array(
-				'dojoType'=>'dijit.form.TextBox','class'	=>	'fullside',));
+				'dojoType'=>'dijit.form.Textarea',
+				'class'=>'fullside',
+				'style'=>'width:100%;min-height:60px; font-size:18px;'));
 		
 		$usa=new Zend_Dojo_Form_Element_NumberTextBox('usa');
 		$usa->setAttribs(array(
@@ -301,6 +331,57 @@ Class Capital_Form_FrmCapitale extends Zend_Dojo_Form {
 			'dojoType'	=>	'dijit.form.NumberTextBox',
 			'class'		=>	'td'
 		));
+		
+		
+		$usabank=new Zend_Dojo_Form_Element_NumberTextBox('usabank');
+		$usabank->setAttribs(array(
+				'dojoType'=>'dijit.form.NumberTextBox',
+				'placeHolder'   =>  '0',
+				'class'	=>	'td',
+				'Onkeyup'	=>	'validateTransfer(1);',
+		));
+		$usabank->setValue(0);
+		
+		$bathbank=new Zend_Dojo_Form_Element_NumberTextBox('bathbank');
+		$bathbank->setAttribs(array(
+				'dojoType'=>'dijit.form.NumberTextBox',
+				'class'	=>	'td',
+				'required'	=> true,
+				'Onkeyup'	=>	'validateTransfer(2);'
+		));
+		$bathbank->setValue(0);
+		
+		$reilbank=new Zend_Dojo_Form_Element_NumberTextBox('reilbank');
+		$reilbank->setAttribs(array(
+				'dojoType'=>'dijit.form.NumberTextBox',
+				'placeHolder'   =>  '0',
+				'class'	=>	'td',
+				'required'	=> true,
+				'Onkeyup'	=>	'validateTransfer(3);'
+		));
+		$reilbank->setValue(0);
+		
+		$dollar_currentbank = new Zend_Dojo_Form_Element_NumberTextBox("dollarbank_current");
+		$dollar_currentbank->setAttribs(array(
+				'dojoType'	=>	'dijit.form.NumberTextBox',
+				'class'		=>	'td',
+				'readonly'=>true,
+		));
+		
+		$bath_currentbank = new Zend_Dojo_Form_Element_NumberTextBox("bathbank_current");
+		$bath_currentbank->setAttribs(array(
+				'dojoType'	=>	'dijit.form.NumberTextBox',
+				'class'		=>	'td',
+				'readonly'=>true,
+		));
+		
+		$reil_currentbank = new Zend_Dojo_Form_Element_NumberTextBox("reilbank_current");
+		$reil_currentbank->setAttribs(array(
+				'dojoType'	=>	'dijit.form.NumberTextBox',
+				'class'		=>	'td',
+				'readonly'=>true,
+		));
+		
 		$id = new Zend_Form_Element_Hidden('id');
 		if($_data!=null){
 			$brance->setValue($_data['id']);
@@ -312,7 +393,7 @@ Class Capital_Form_FrmCapitale extends Zend_Dojo_Form {
 			$bath->setValue($_data['amount_bath']);
 			$id->setValue($_data['id']);
 		}
-		$this->addElements(array($dollar_current,$reil_current,$bath_current,$brance,$date,$_stutas,
+		$this->addElements(array($reil_currentbank,$bath_currentbank,$dollar_currentbank,$usabank,$reilbank,$bathbank,$dollar_current,$reil_current,$bath_current,$brance,$date,$_stutas,
 				$note,$bath,$usa,$reil,$id));
 		return $this;
 	}

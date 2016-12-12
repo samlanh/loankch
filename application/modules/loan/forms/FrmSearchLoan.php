@@ -33,24 +33,23 @@ Class Loan_Form_FrmSearchLoan extends Zend_Dojo_Form {
 		
 		));
 		
-		$_group_code = new Zend_Dojo_Form_Element_FilteringSelect('group_code');
-		$_group_code->setAttribs(array(
-				'dojoType'=>'dijit.form.FilteringSelect',
-// 				'class'=>'fullside',
-				'onchange'=>'getmemberIdGroup();'
-		));
-		$group_opt = $db ->getGroupCodeById(1,1,1);
-		$_group_code->setMultiOptions($group_opt);
-		$_group_code->setValue($request->getParam("group_code"));
+// 		$_group_code = new Zend_Dojo_Form_Element_FilteringSelect('group_code');
+// 		$_group_code->setAttribs(array(
+// 				'dojoType'=>'dijit.form.FilteringSelect',
+// 				'onchange'=>'getmemberIdGroup();'
+// 		));
+// 		$group_opt = $db ->getGroupCodeById(1,1,1);
+// 		$_group_code->setMultiOptions($group_opt);
+// 		$_group_code->setValue($request->getParam("group_code"));
 		
-		$_customer_code = new Zend_Dojo_Form_Element_FilteringSelect('customer_code');
-		$_customer_code->setAttribs(array(
-				'dojoType'=>'dijit.form.FilteringSelect',
-				'onchange'=>'getmemberIdGroup();'
-		));
-		$group_opt = $db ->getGroupCodeById(1,0,1);//code,individual,option
-		$_customer_code->setMultiOptions($group_opt);
-		$_customer_code->setValue($request->getParam("customer_code"));
+// 		$_customer_code = new Zend_Dojo_Form_Element_FilteringSelect('customer_code');
+// 		$_customer_code->setAttribs(array(
+// 				'dojoType'=>'dijit.form.FilteringSelect',
+// 				'onchange'=>'getmemberIdGroup();'
+// 		));
+// 		$group_opt = $db ->getGroupCodeById(1,0,1);//code,individual,option
+// 		$_customer_code->setMultiOptions($group_opt);
+// 		$_customer_code->setValue($request->getParam("customer_code"));
 		
 		$_member = new Zend_Dojo_Form_Element_FilteringSelect('member');
 		$_member->setAttribs(array(
@@ -61,23 +60,23 @@ Class Loan_Form_FrmSearchLoan extends Zend_Dojo_Form {
 		$_member->setMultiOptions($options);
 		$_member->setValue($request->getParam("member"));
 		
-		$_groupid = new Zend_Dojo_Form_Element_FilteringSelect('group_id');
-		$_groupid->setAttribs(array(
-				'dojoType'=>'dijit.form.FilteringSelect',
- 				'onchange'=>'popupCheckClient();'
-				));
-		$options = $db ->getGroupCodeById(2,1,1);//show name,show group,show option
-		$_groupid->setMultiOptions($options);
-		$_groupid->setValue($request->getParam("group_id"));
+// 		$_groupid = new Zend_Dojo_Form_Element_FilteringSelect('group_id');
+// 		$_groupid->setAttribs(array(
+// 				'dojoType'=>'dijit.form.FilteringSelect',
+//  				'onchange'=>'popupCheckClient();'
+// 				));
+// 		$options = $db ->getGroupCodeById(2,1,1);//show name,show group,show option
+// 		$_groupid->setMultiOptions($options);
+// 		$_groupid->setValue($request->getParam("group_id"));
 		
-		$_co_code = new Zend_Dojo_Form_Element_FilteringSelect('co_code');
-		$_co_code->setAttribs(array(
+		$_coid = new Zend_Dojo_Form_Element_FilteringSelect('co_id');
+		$_coid->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'onchange'=>'popupCheckCO();'
 		));
 		$options = $db ->getAllCOName(1);
-		$_co_code->setMultiOptions($options);
-		$_co_code->setValue($request->getParam("co_code"));
+		$_coid->setMultiOptions($options);
+		$_coid->setValue($request->getParam("co_id"));
 		
 		$_currency_type = new Zend_Dojo_Form_Element_FilteringSelect('currency_type');
 		$_currency_type->setAttribs(array(
@@ -102,14 +101,14 @@ Class Loan_Form_FrmSearchLoan extends Zend_Dojo_Form {
 		}
 		$_repayment_method->setValue($opt_method);
 		
-		$_zone = new Zend_Dojo_Form_Element_FilteringSelect('zone');
-		$_zone->setAttribs(array(
-				'dojoType'=>'dijit.form.FilteringSelect',
-				'onchange'=>'popupCheckZone();'
-		));
-		$options = $db ->getZoneList(1);
-		$_zone->setMultiOptions($options);
-		$_zone->setValue($request->getParam("zone"));
+// 		$_zone = new Zend_Dojo_Form_Element_FilteringSelect('zone');
+// 		$_zone->setAttribs(array(
+// 				'dojoType'=>'dijit.form.FilteringSelect',
+// 				'onchange'=>'popupCheckZone();'
+// 		));
+// 		$options = $db ->getZoneList(1);
+// 		$_zone->setMultiOptions($options);
+// 		$_zone->setValue($request->getParam("zone"));
 		
 		$_releasedate = new Zend_Dojo_Form_Element_DateTextBox('start_date');
 		$_releasedate->setAttribs(array('dojoType'=>'dijit.form.DateTextBox',
@@ -145,8 +144,8 @@ Class Loan_Form_FrmSearchLoan extends Zend_Dojo_Form {
 		$_payterm->setMultiOptions($options);
 		$_payterm->setValue($request->getParam("payment_term"));
 		
-		$_branch_name = new Zend_Dojo_Form_Element_FilteringSelect('branch_name');
-		$_branch_name->setAttribs(array(
+		$_branch_id = new Zend_Dojo_Form_Element_FilteringSelect('branch_id');
+		$_branch_id->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 		));
 		
@@ -155,13 +154,12 @@ Class Loan_Form_FrmSearchLoan extends Zend_Dojo_Form {
 			if(!empty($rows))foreach($rows AS $row){
 				$options[$row['br_id']]=$row['branch_namekh'];
 			}
-		$_branch_name->setMultiOptions($options);
-		$_branch_name->setValue($request->getParam("branch_name"));
+		$_branch_id->setMultiOptions($options);
+		$_branch_id->setValue($request->getParam("branch_id"));
 		
 		$_pay_every = new Zend_Dojo_Form_Element_FilteringSelect('pay_every');
 		$_pay_every->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
-// 				'class'=>'fullside',
 				'required' =>'true',
 				'onchange'=>'changeCollectType();'
 		));
@@ -184,16 +182,20 @@ Class Loan_Form_FrmSearchLoan extends Zend_Dojo_Form {
 		
 		if($data!=null){
 			//print_r($data);
-			$_branch_name->setValue($data['branch_id']);
-			$_member->setValue($data['client_id']);
-			$_co_code->setValue($data['to_co']);
-			$_zone->setValue($data['zone_id']);
+// 			$_branch_id->setValue($data['member_id']);
+// 			$_member->setValue($data['client_id']);
+			$_coid->setValue($data['co_id']);
+// 			$_zone->setValue($data['zone_id']);
 			$_releasedate->setValue($data['date_release']);
 			$_currency_type->setValue($data['payment_method']);
-			$client_name->setValue($data['client_name']);
+// 			$client_name->setValue($data['client_name']);
 		}
-		$this->addElements(array($client_name,$_pay_every,$_groupid,$_title,$_branch_name,$_member,$_co_code,$_currency_type,$_zone,$_releasedate
-				,$_payterm,$_dateline,$_group_code,$_customer_code,$_status,$_btn_search,$_repayment_method));
+		$this->addElements(array(
+				$client_name,
+// 		$_groupid,$_group_code,$_customer_code,$_zone
+// 				$_member,
+				$_pay_every,$_title,$_branch_id,$_coid,$_currency_type,$_releasedate
+				,$_payterm,$_dateline,$_status,$_btn_search,$_repayment_method));
 		return $this;
 		
 	}	

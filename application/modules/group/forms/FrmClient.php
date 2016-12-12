@@ -231,9 +231,9 @@ Class Group_Form_FrmClient extends Zend_Dojo_Form {
 				'required' =>'true',
 				'onchange'=>'popupCheckVillage();'
 		));
-		$rows =  $db->getVillage();
+// 		$rows =  $db->getVillage();
 		$options=array(''=>"------Select------",-1=>"Add New");
-		if(!empty($rows))foreach($rows AS $row) $options[$row['vill_id']]=$row['village_name'];
+// 		if(!empty($rows))foreach($rows AS $row) $options[$row['vill_id']]=$row['village_name'];
 		$_village->setMultiOptions($options);
 		
 		$_house = new Zend_Dojo_Form_Element_TextBox('house');

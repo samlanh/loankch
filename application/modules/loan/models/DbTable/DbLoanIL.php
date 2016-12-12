@@ -61,8 +61,8 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     	if($search['status']>-1){
     		$where.= " AND lm.status = ".$search['status'];
     	}
-    	if(($search['customer_code'])>0){
-    		$where.= " AND lm.client_id=".$search['customer_code'];
+    	if(($search['client_name'])>0){
+    		$where.= " AND lm.client_id=".$search['client_name'];
     	}
     	if(($search['repayment_method'])>0){
     		$where.= " AND lm.payment_method = ".$search['repayment_method'];

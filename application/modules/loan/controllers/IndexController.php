@@ -17,7 +17,7 @@ class Loan_IndexController extends Zend_Controller_Action {
 				$search = array(
 						'txt_search'=>'',
 						'deposit'=>'',
-						'customer_code'=> -1,
+						'client_name'=> -1,
 						'repayment_method' => -1,
 						'branch_id' => -1,
 						'co_id' => -1,

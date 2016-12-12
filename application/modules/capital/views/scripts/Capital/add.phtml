@@ -33,12 +33,26 @@ $frm = $this->frm;
 							<td><?php echo $frm->getElement('status')?></td>
 						</tr>
 						<tr>
+							<td colspan="6" bgcolor="#dbe7ff">ដើមទុនក្នុងដៃ (Cash On Hand)</td>
+						</tr>
+						<tr>
 							<td>ប្រាក់ដុល្លា</td>
 							<td><?php echo $frm->getElement('usa')?></td>
-							<td>ប្រាក់បាត</td>	
-							<td><?php echo $frm->getElement('bath')?></td>
 							<td>ប្រាក់រៀល</td>
 							<td><?php echo $frm->getElement('reil')?></td>
+							<td>ប្រាក់បាត</td>	
+							<td><?php echo $frm->getElement('bath')?></td>
+						</tr>
+						<tr>
+							<td colspan="6" bgcolor="#dbe7ff">ដើមទុនក្នុងធនាគា (Cash In Bank)</td>
+						</tr>
+						<tr>
+							<td>ប្រាក់ដុល្លា</td>
+							<td><?php echo $frm->getElement('usabank')?></td>
+							<td>ប្រាក់រៀល</td>
+							<td><?php echo $frm->getElement('reilbank')?></td>
+							<td>ប្រាក់បាត</td>	
+							<td><?php echo $frm->getElement('bathbank')?></td>
 						</tr>
 						<tr>
 							<td></td>

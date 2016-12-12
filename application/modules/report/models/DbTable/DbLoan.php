@@ -420,14 +420,9 @@ class Report_Model_DbTable_DbLoan extends Zend_Db_Table_Abstract
       	return $db->fetchAll($sql.$where.$order);
       	 
       }
-      
-      
-      
-      
-      
       public function getALLCommission($search=null){
       	$db = $this->getAdapter();
-      	$sql="SELECT * FROM v_getcollectmoney WHERE status=1 ";
+      	$sql="SELECT * FROM v_comissionco WHERE status=1 ";
       	$from_date =(empty($search['start_date']))? '1': " date_input >= '".$search['start_date']." 00:00:00'";
       	$to_date = (empty($search['end_date']))? '1': " date_input <= '".$search['end_date']." 23:59:59'";
       	$where = " AND ".$from_date." AND ".$to_date;

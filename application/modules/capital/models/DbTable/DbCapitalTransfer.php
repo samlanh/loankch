@@ -393,8 +393,8 @@ class Capital_Model_DbTable_DbCapitalTransfer extends Zend_Db_Table_Abstract
     }
     public function getAmountByBranceId($data){
     	$db = $this->getAdapter();
-    	$sql="SELECT brc.`amount_dollar`,brc.`amount_bath`,brc.`amount_riel` FROM `ln_branch_capital` AS brc WHERE brc.`branch_id`=$data AND brc.`status`=1";
-    	return $db->fetchRow($sql);
+    	$sql="SELECT brc.account_id,brc.`amount_dollar`,brc.`amount_bath`,brc.`amount_riel` FROM `ln_branch_capital` AS brc WHERE brc.`branch_id`=$data AND brc.`status`=1 ORDER BY account_id ASC ";
+    	return $db->fetchAll($sql);
     }
     function getTransferByID($id){
     	$db = $this->getAdapter();
