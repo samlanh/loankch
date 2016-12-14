@@ -2,7 +2,7 @@
 Class Capital_Form_FrmCapitale extends Zend_Dojo_Form {
 	public function frmCapital($_data=null)
 	{
-		/* Form Elements & Other Definitions Here ... */
+/* Form Elements & Other Definitions Here ... */
 		$branch = new Zend_Dojo_Form_Element_TextBox("branch");
 		$branch->setAttribs(array('dojoType'=>'dijit.form.TextBox',
  				'class'=>'fullside',
@@ -20,6 +20,36 @@ Class Capital_Form_FrmCapitale extends Zend_Dojo_Form {
 			$options[$row['br_id']]=$row['branch_namekh'];
 		}
 		$brance->setMultiOptions($options);
+		
+		
+		
+		
+		
+		
+		
+		$interests = new Zend_Dojo_Form_Element_TextBox("interests");
+		$interests->setAttribs(array('dojoType'=>'dijit.form.TextBox',
+				'class'=>'fullside',
+				'required' =>'true',));
+		$interest = new Zend_Dojo_Form_Element_FilteringSelect('interest');
+		$interest->setAttribs(array(
+				'dojoType'=>'dijit.form.FilteringSelect',
+				// 				'class'=>'fullside',
+				'required' =>'true',
+		));
+		$db = new Application_Model_DbTable_DbGlobal();
+		$rows = $db->getAllInterest();
+		$options='';
+		if(!empty($rows))foreach($rows AS $row){
+			$options[$row['id']]=$row['value'];
+		}
+		$interest->setMultiOptions($options);
+		
+		
+		
+		
+		
+		
 		
 		$date=new Zend_Dojo_Form_Element_DateTextBox('date');
 		$date->setAttribs(array(
@@ -93,6 +123,7 @@ Class Capital_Form_FrmCapitale extends Zend_Dojo_Form {
 		$id = new Zend_Form_Element_Hidden('id');
 		if($_data!=null){
 			$brance->setValue($_data['id']);
+			//$interest->setValue($_data['id']);
 			$date->setValue($_data['date']);
 			$_stutas->setValue($_data['status']);
 			$note->setValue($_data['note']);
@@ -102,7 +133,7 @@ Class Capital_Form_FrmCapitale extends Zend_Dojo_Form {
 			$id->setValue($_data['id']);
 		
 		}
-		$this->addElements(array($branch,$brance,$date,$_stutas,
+		$this->addElements(array($interest,$interests,$branch,$brance,$date,$_stutas,
 				$note,$bath,$usa,$reil,$id,$bathbank,$usabank,$reilbank));
 		return $this;
 	}
@@ -266,7 +297,7 @@ Class Capital_Form_FrmCapitale extends Zend_Dojo_Form {
 			$options[$row['br_id']]=$row['branch_namekh'];
 		}
 		$brance->setMultiOptions($options);
-	
+		
 		$date=new Zend_Dojo_Form_Element_DateTextBox('date');
 		$date->setAttribs(array(
 				'dojoType'=>'dijit.form.DateTextBox'

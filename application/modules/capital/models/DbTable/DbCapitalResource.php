@@ -77,14 +77,14 @@ class Capital_Model_DbTable_DbCapitalResource extends Zend_Db_Table_Abstract
 		   				'branch_id'=>$branch
 		   			);
 		   			$this->_name = "ln_capital_detail";
-		   			$this->insert($arr_history);
+		   			//$this->insert($arr_history);
 	   		     }
 	   		}else {
 	   			if($_data['usa']!=0 OR $_data['reil']!=0 OR $_data['bath']!=0){
 			    	$_arr = array(
 			    		'branch_id'		=>	$_data['brance'],
-			    	    'date'			=>	$_data['date'],
-			    	    'status'		=>	$_data['status'],
+			    	   'date'			=>	$_data['date'],
+			    	   'status'		=>	$_data['status'],
 			    	    'amount_dollar'	=>	$_data['usa'],
 			    	    'amount_riel'	=>	$_data['reil'],
 			    		'amount_bath'	=>	$_data['bath'],
@@ -114,7 +114,7 @@ class Capital_Model_DbTable_DbCapitalResource extends Zend_Db_Table_Abstract
 			    	$this->insert($arr_history);
 	   			}
 	   		}
-	   		//money in bank
+	   		money in bank
 	   		$row_capital = $this->getCapiitalById($branch,2);
 	   		if(!empty($row_capital)){
 	   			if($_data['usabank']!=0 OR $_data['reilbank']!=0 OR $_data['bathbank']!=0){
